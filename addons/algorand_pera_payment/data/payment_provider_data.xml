@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="payment_provider_algorand_pera" model="payment.provider">
+        <field name="name">Algorand Pera Wallet</field>
+        <field name="code">algorand_pera</field>
+        <field name="image_128" type="base64" file="algorand_pera_payment/static/src/images/algorand_logo_mark_black.svg"/>
+        <field name="module_id" ref="base.module_algorand_pera_payment"/>
+        <field name="inline_form_view_id" ref="algorand_pera_payment.algorand_inline_form"/>
+    </record>
+
+</odoo>

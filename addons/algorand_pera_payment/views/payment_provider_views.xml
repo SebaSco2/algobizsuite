@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="payment_provider_form_algorand" model="ir.ui.view">
+        <field name="name">Algorand Provider Form</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+                <group name="provider_credentials" position="inside">
+                    <group invisible="code != 'algorand_pera'" name="algorand_credentials" string="Algorand (Pera)">
+                        <field name="algorand_merchant_address" 
+                               placeholder="YOUR58CHARACTERALGORANDWALLETADDRESSHERE12345678901234"
+                               required="code == 'algorand_pera' and state != 'disabled'"/>
+                        <label for="algorand_node_url"/>
+                        <div class="o_row" col="2">
+                            <field name="algorand_node_url"/>
+                            <button string="Verify Node"
+                                    type="object"
+                                    name="action_algorand_verify_node"
+                                    class="btn btn-secondary"/>
+                        </div>
+                        <div class="o_row" col="2">
+                            <button string="Check USDC Opt-in Status"
+                                    type="object"
+                                    name="action_algorand_check_usdc_optin"
+                                    class="btn btn-primary"
+                                    help="Verify if your merchant address is opted-in to USDC to accept USD payments"/>
+                        </div>
+                        <div class="alert alert-info" role="alert">
+                            <strong>Important:</strong>
+                            <ul class="mb-0">
+                                <li>Merchant address is <strong>required</strong> to enable the payment provider</li>
+                                <li>To accept <strong>USD payments</strong>, your merchant address must be <strong>opted-in to USDC</strong></li>
+                                <li>You can always accept <strong>ALGO payments</strong> without USDC opt-in</li>
+                                <li>Use the "Check USDC Opt-in Status" button to verify your configuration</li>
+                            </ul>
+                        </div>
+                    </group>
+                </group>
+        </field>
+    </record>
+
+</odoo>

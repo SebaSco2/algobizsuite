@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- POS Payment Screen for Algorand Pera Wallet -->
+    <t t-name="point_of_sale.PaymentScreenAlgorand" owl="1">
+        <div class="algorand-payment-screen">
+            
+            <!-- QR Code Display -->
+            <div class="qr-code-container" t-if="state.qrCode">
+                <h3>Scan with Pera Wallet</h3>
+                <img t-att-src="state.qrCode" alt="Payment QR Code" class="qr-code-image"/>
+                <p class="merchant-address">
+                    Pay to: <span t-esc="state.merchantAddress"/>
+                </p>
+            </div>
+
+            <!-- Status Message -->
+            <div class="status-container">
+                <div t-att-class="'alert alert-' + (state.status === 'error' ? 'danger' : state.status === 'confirmed' ? 'success' : 'info')">
+                    <i t-att-class="'fa fa-' + (state.status === 'confirming' ? 'spinner fa-spin' : state.status === 'confirmed' ? 'check-circle' : 'info-circle')"/>
+                    <span t-esc="state.message"/>
+                </div>
+            </div>
+
+            <!-- Manual Transaction Hash Entry -->
+            <div class="manual-entry" t-if="state.status === 'scanning' or state.status === 'error'">
+                <h4>Or enter transaction hash manually:</h4>
+                <div class="input-group">
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        placeholder="Enter 52-character transaction hash"
+                        t-model="state.txHashInput"
+                        maxlength="52"
+                    />
+                    <button 
+                        class="btn btn-primary" 
+                        t-on-click="() => this.verifyPayment(state.txHashInput)">
+                        Verify Payment
+                    </button>
+                </div>
+                <small class="text-muted">
+                    After paying with Pera Wallet, paste the transaction hash here to confirm
+                </small>
+            </div>
+
+            <!-- Payment Details -->
+            <div class="payment-details" t-if="state.status === 'confirmed'">
+                <h4>Payment Confirmed ✓</h4>
+                <p><strong>Transaction:</strong> <span t-esc="state.txHash"/></p>
+            </div>
+
+            <!-- Help Text -->
+            <div class="help-text">
+                <p>
+                    <i class="fa fa-mobile"/> Open Pera Wallet on your phone<br/>
+                    <i class="fa fa-qrcode"/> Scan the QR code<br/>
+                    <i class="fa fa-check"/> Confirm the payment in your wallet
+                </p>
+            </div>
+
+        </div>
+    </t>
+
+</templates>
+

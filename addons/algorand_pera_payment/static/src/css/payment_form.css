@@ -1,0 +1,227 @@
+/* Algorand Pera Wallet Payment Form Styles */
+
+/* Allow Algorand logo to show, but hide generic camera icons */
+.o_payment_algorand_pera .o_payment_method_logo:not([src*="algorand"]):not([src*="pera"]),
+.o_payment_algorand_pera .payment-method-logo:not([src*="algorand"]):not([src*="pera"]),
+.o_payment_algorand_pera img[alt*="payment"]:not([src*="algorand"]):not([src*="pera"]),
+.o_payment_algorand_pera .payment-icon:not([src*="algorand"]):not([src*="pera"]) {
+    display: none !important;
+}
+
+/* Allow Algorand/Pera logos to show in payment option */
+.o_payment_option[data-provider-code="algorand_pera"] img[src*="algorand"],
+.o_payment_option[data-provider-code="algorand_pera"] img[src*="pera"],
+.o_payment_option[data-provider-code="algorand_pera"] .o_payment_method_logo[src*="algorand"],
+.o_payment_option[data-provider-code="algorand_pera"] .o_payment_method_logo[src*="pera"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    margin: auto !important;
+    padding: auto !important;
+}
+
+/* Hide only generic camera icons, not Algorand logos */
+.o_payment_option[data-provider-code="algorand_pera"] img:not([src*="algorand"]):not([src*="pera"]),
+.o_payment_option[data-provider-code="algorand_pera"] .o_payment_method_logo:not([src*="algorand"]):not([src*="pera"]),
+.o_payment_option[data-provider-code="algorand_pera"] .payment-method-logo:not([src*="algorand"]):not([src*="pera"]) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Style the payment option container */
+.o_payment_option[data-provider-code="algorand_pera"] {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.o_payment_option[data-provider-code="algorand_pera"]:hover {
+    border-color: #007bff;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.o_payment_option[data-provider-code="algorand_pera"] .o_payment_option_label {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #007bff;
+}
+
+.o_payment_algorand_pera {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+}
+
+/* Main Pera Wallet Logo styling */
+.pera-logo-main {
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+    transition: transform 0.3s ease;
+    border-radius: 50%;
+    background: white;
+    padding: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.pera-logo-main:hover {
+    transform: scale(1.05);
+}
+
+/* Payment title styling */
+.o_payment_algorand_pera h4 {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.o_payment_algorand_pera .text-muted {
+    color: #6c757d !important;
+    font-size: 0.95rem;
+}
+
+/* Custom button styles */
+.o_payment_algorand_pera .btn {
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.o_payment_algorand_pera .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.o_payment_algorand_pera .btn-primary {
+    background: #6c757d;
+    border: none;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 12px 24px;
+    transition: all 0.2s ease;
+}
+
+.o_payment_algorand_pera .btn-primary:hover {
+    background: #5a6268;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
+
+.o_payment_algorand_pera .btn-success {
+    background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+    border: none;
+}
+
+/* Card styles */
+.o_payment_algorand_pera .card {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+}
+
+.o_payment_algorand_pera .card-header {
+    border-radius: 12px 12px 0 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Address display */
+.o_payment_algorand_pera .font-monospace {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    word-break: break-all;
+    background-color: #f8f9fa;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+}
+
+/* Payment details styling */
+.o_payment_algorand_pera .form-label {
+    font-weight: 600;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.o_payment_algorand_pera .text-primary {
+    color: #007bff !important;
+    font-weight: 600;
+}
+
+/* Security notice */
+.o_payment_algorand_pera .text-muted {
+    color: #6c757d !important;
+}
+
+/* Loading states */
+.o_payment_algorand_pera .btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .o_payment_algorand_pera .btn-lg {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .o_payment_algorand_pera .card-body {
+        padding: 1rem;
+    }
+    
+    .o_payment_algorand_pera .font-monospace {
+        font-size: 0.75rem;
+    }
+}
+
+/* Animation for wallet connection */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.o_payment_algorand_pera #wallet-info {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* Error message styling */
+.o_payment_algorand_pera .alert {
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.o_payment_algorand_pera .alert-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: white;
+}
+
+.o_payment_algorand_pera .alert-warning {
+    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+    color: #212529;
+}

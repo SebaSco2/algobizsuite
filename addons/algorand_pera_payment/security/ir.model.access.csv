@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_payment_provider_algorand_pera_public,payment.provider.algorand_pera.public,payment.model_payment_provider,base.group_public,1,0,0,0
+access_payment_transaction_algorand_pera_public,payment.transaction.algorand_pera.public,payment.model_payment_transaction,base.group_public,1,0,0,0
+access_payment_method_algorand_pera_public,payment.method.algorand_pera.public,payment.model_payment_method,base.group_public,1,0,0,0
+

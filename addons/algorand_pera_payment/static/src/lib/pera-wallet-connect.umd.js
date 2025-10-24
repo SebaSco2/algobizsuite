@@ -1,0 +1,1 @@
+Couldn't find the requested file /dist/pera-wallet-connect.umd.js in @perawallet/connect.

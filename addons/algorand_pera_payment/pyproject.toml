@@ -1,0 +1,35 @@
+[build-system]
+requires = ["whool"]
+build-backend = "whool.buildapi"
+
+[project]
+name = "odoo-addon-algorand_pera_payment"
+version = "19.0.1.0.0"
+description = "Add Pera Wallet (Algorand) payment option to website checkout"
+readme = "README.rst"
+authors = [{name = "Odoo Community Association (OCA)", email = "support@odoo-community.org"}]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 19.0",
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Programming Language :: Python",
+]
+dependencies = [
+    "odoo>=19.0,<19.1",
+    "algosdk",
+]
+
+[project.urls]
+Source = "https://github.com/OCA/payment"
+
+[tool.setuptools-odoo]
+odoo_version_override = "19.0"
+external_dependencies_override = {python = ["algosdk"]}
+
+[tool.odoo]
+
+[tool.odoo.addons]
+
+[tool.odoo.addons.algorand_pera_payment]
+

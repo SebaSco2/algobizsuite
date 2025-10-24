@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- No method-level fields needed; merchant address is on provider -->
+
+    <!-- No provider-specific journal/payment controls needed -->
+
+</odoo>

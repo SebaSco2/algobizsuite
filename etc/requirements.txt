@@ -1,0 +1,3 @@
+inotify
+watchdog
+py-algorand-sdk==2.11.1

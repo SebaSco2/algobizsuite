@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres:17
+    user: root
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-odoo}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB:-postgres}
+    restart: always
+    volumes:
+      - ./postgresql:/var/lib/postgresql/data
+    env_file:
+      - .env
+
+  odoo19:
+    image: odoo:19
+    user: root
+    depends_on:
+      - db
+    ports:
+      - "8069:8069"
+      - "8072:8072"
+      - "8017:8017"
+    tty: true
+    entrypoint: ["/entrypoint.sh"]
+    command: ["odoo"]
+    environment:
+      - RDS_HOST=${DB_HOST:-db}
+      - USER=${DB_USER:-odoo}
+      - PASSWORD=${DB_PASSWORD}
+      - ODOO_ADMIN_PASSWORD=${ODOO_ADMIN_PASSWORD}
+    volumes:
+      - ./entrypoint.sh:/entrypoint.sh
+      - ./addons:/mnt/extra-addons
+      - ./test_installation:/var/lib/odoo
+      - ./etc:/etc/odoo
+    restart: always
+    env_file:
+      - .env

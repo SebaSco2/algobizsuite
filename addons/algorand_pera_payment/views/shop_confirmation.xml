@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend the shop confirmation page to show Algorand transaction details -->
+    <template id="algorand_confirmation_details" inherit_id="website_sale.confirmation">
+        <xpath expr="//t[@t-set='additional_title']" position="before">
+            <t t-if="order.transaction_ids and any(tx.provider_code == 'algorand_pera' and tx.state == 'done' for tx in order.transaction_ids)">
+                <t t-set="algorand_tx" t-value="order.transaction_ids.filtered(lambda tx: tx.provider_code == 'algorand_pera' and tx.state == 'done')[0]"/>
+                
+                <div class="alert alert-info mb-3" role="alert">
+                    <div class="d-flex align-items-start">
+                        <i class="fa fa-check-circle fa-2x text-success me-3 mt-1"></i>
+                        <div class="flex-grow-1">
+                            <h5 class="alert-heading mb-2">
+                                <strong>Algorand Payment Confirmed</strong>
+                            </h5>
+                            <p class="mb-3">
+                                Your payment has been confirmed on the Algorand blockchain and is cryptographically secure.
+                            </p>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="small text-muted mb-1">Transaction Hash</div>
+                                    <div class="font-monospace small bg-white p-2 rounded border text-break">
+                                        <t t-esc="algorand_tx.algorand_tx_id"/>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="small text-muted mb-1">Amount Paid</div>
+                                    <div class="h4 text-success mb-0">
+                                        <t t-esc="algorand_tx.amount"/> <t t-esc="algorand_tx.currency_id.name"/>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <t t-if="algorand_tx.algorand_sender_address">
+                                <div class="row g-3 mt-1">
+                                    <div class="col-12">
+                                        <div class="small text-muted mb-1">From Wallet Address</div>
+                                        <div class="font-monospace small bg-white p-2 rounded border text-break">
+                                            <t t-esc="algorand_tx.algorand_sender_address"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                            
+                            <div class="mt-3 d-flex align-items-center">
+                                <t t-set="explorer_url" t-value="'https://testnet.explorer.perawallet.app/tx/' + algorand_tx.algorand_tx_id if algorand_tx.provider_id.algorand_network == 'testnet' else 'https://explorer.perawallet.app/tx/' + algorand_tx.algorand_tx_id"/>
+                                
+                                <a t-att-href="explorer_url" target="_blank" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-external-link me-2"></i>
+                                    View on Algorand Explorer
+                                </a>
+                                
+                                <small class="text-muted ms-3">
+                                    <i class="fa fa-shield-alt me-1"></i>
+                                    Secured by Algorand Blockchain
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="payment_method_algorand_pera" model="payment.method">
+            <field name="name">Algorand (Pera Wallet)</field>
+            <field name="code">algorand_pera</field>
+            <field name="sequence">10</field>
+            <field name="active">True</field>
+            <field name="support_manual_capture">none</field>
+            <field name="support_refund">full_only</field>
+            <field name="support_tokenization">False</field>
+            <field name="support_express_checkout">False</field>
+            <field name="image" type="base64" file="algorand_pera_payment/static/src/images/pera_logo.svg"/>
+        </record>
+        
+        <!-- Create account.payment.method for Algorand -->
+        <record id="account_payment_method_algorand_pera" model="account.payment.method">
+            <field name="name">Algorand (Pera Wallet)</field>
+            <field name="code">algorand_pera</field>
+            <field name="payment_type">inbound</field>
+        </record>
+    </data>
+</odoo>
