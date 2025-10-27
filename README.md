@@ -4,12 +4,101 @@ Docker-based Odoo 19 development environment featuring Algorand Pera Wallet paym
 
 ## Table of Contents
 
+- [Algorand Pera Payment Module](#algorand-pera-payment-module)
 - [Quick Start](#quick-start)
 - [Configuration](#configuration)
-- [Algorand Pera Payment Module](#algorand-pera-payment-module)
 - [Development](#development)
-- [Docker Commands](#docker-commands)
+- [Manual Setup](#manual-setup)
+- [Troubleshooting](#troubleshooting)
 - [Resources](#resources)
+
+## Algorand Pera Payment Module
+
+Accept cryptocurrency payments (ALGO and USDC) in your Odoo store via Pera Wallet.
+
+![Algorand Payment in Action](addons/algorand_pera_payment/readme/screenshots/10-doThePayment.png)
+
+### Key Features
+
+- ✅ **ALGO Payments** - Native Algorand cryptocurrency
+- ✅ **USDC Payments** - Stablecoin via Algorand Standard Assets
+- ✅ **Fast Transactions** - ~3.7 second confirmation
+- ✅ **Low Fees** - Less than $0.01 per transaction
+- ✅ **TestNet & MainNet** - Full testing environment support
+
+### Documentation
+
+Comprehensive guides available in [`addons/algorand_pera_payment/readme/`](addons/algorand_pera_payment/readme/):
+
+- **[Description](addons/algorand_pera_payment/readme/DESCRIPTION.md)** - Features and benefits
+- **[Installation](addons/algorand_pera_payment/readme/INSTALL.md)** - Prerequisites and setup steps
+- **[Configuration](addons/algorand_pera_payment/readme/CONFIGURE.md)** - Network setup, USDC opt-in, merchant address
+- **[Usage](addons/algorand_pera_payment/readme/USAGE.md)** - Payment flow, customer experience, error handling
+- **[History](addons/algorand_pera_payment/readme/HISTORY.md)** - Changelog and version history
+- **[Contributors](addons/algorand_pera_payment/readme/CONTRIBUTORS.md)** - Project contributors
+
+Full API documentation: [README.rst](addons/algorand_pera_payment/README.rst)
+
+### Quick Configuration
+
+**📸 [Complete Configuration Guide →](addons/algorand_pera_payment/readme/CONFIGURE.md)**
+
+![Configure Algorand Provider](addons/algorand_pera_payment/readme/screenshots/4-setAddress.png)
+
+**5 Simple Steps**:
+
+1. **Login to Odoo** - Access your admin panel
+2. **Navigate to Payment Providers** - Website → Configuration → Payment Providers
+3. **Select Algorand Pera Wallet** - Choose from available providers
+4. **Configure Merchant Address** - Set your wallet address and node URL
+5. **Publish Provider** - Enable for customers
+
+**Basic Configuration Steps**:
+
+1. **Configure merchant address**:
+   - Go to Website → Configuration → Payment Providers
+   - Select "Algorand Pera Wallet"
+   - Set your Algorand wallet address (58 characters)
+   - Click "Check USDC Opt-in Status" and "Verify Node"
+
+2. **Choose network**: 
+   - TestNet (testing): `https://testnet-api.algonode.cloud`
+   - MainNet (production): `https://mainnet-api.algonode.cloud`
+
+3. **For USD payments**: Opt-in to USDC
+   - TestNet USDC: Asset ID `10458941`
+   - MainNet USDC: Asset ID `31566704`
+
+👉 **See the [Complete Configuration Guide with Screenshots](addons/algorand_pera_payment/readme/CONFIGURE.md) for detailed instructions**
+
+### Customer Payment Flow
+
+**📸 [Complete Payment Flow Guide →](addons/algorand_pera_payment/readme/USAGE.md)**
+
+![Payment Confirmation](addons/algorand_pera_payment/readme/screenshots/11-checkAlgoExplorer.png)
+
+**6-Step Payment Journey**:
+
+1. **Browse & Shop** → Customer browses products and adds items to cart
+2. **Checkout** → Review order and proceed to payment
+3. **Connect Wallet** → Scan QR code or connect Pera Wallet via web
+4. **Review Payment** → See payment details, merchant address, and amount
+5. **Complete Payment** → Sign transaction in Pera Wallet (for USDC: opt-in if needed)
+6. **Confirmation** → Instant confirmation with blockchain transaction hash
+
+**Key Benefits**:
+- ⚡ **Fast**: ~3.7 seconds confirmation time
+- 💰 **Low Cost**: Less than $0.01 per transaction
+- 🔒 **Secure**: Cryptographically verified on Algorand blockchain
+- ✅ **Easy**: Simple QR code or web wallet connection
+- 📱 **Mobile-Friendly**: Works seamlessly with Pera mobile app
+
+**Transaction Details Included**:
+- Transaction note contains: host, amount, currency, and order reference
+- View full transaction on [Algorand Explorer](https://algoexplorer.io/)
+- Automatic order confirmation and email notification
+
+👉 **See the [Complete Payment Flow with Screenshots](addons/algorand_pera_payment/readme/USAGE.md) for the full customer journey**
 
 ## Quick Start
 
@@ -57,9 +146,73 @@ docker-compose restart
 docker-compose down -v
 ```
 
-### Manual Setup
+## Configuration
 
-If you prefer manual setup:
+### Environment Variables
+
+⚠️ **Important**: Configuration files are not included in the repository for security. You must create them from the examples.
+
+**Required files**:
+- `.env` - Environment variables (from `.env.example`)
+- `docker-compose.yml` - Docker config (from `docker-compose.yml.example`)
+- `etc/odoo.conf` - Odoo config (from `etc/odoo.conf.example`)
+
+**Default settings**:
+- **Database**: PostgreSQL 17 on port 5432
+- **Odoo**: http://localhost:8069
+- **User**: `odoo`
+
+All passwords are configured via `.env` file for security.
+
+### Python Dependencies
+
+Automatically installed on startup from `etc/requirements.txt`:
+- `py-algorand-sdk==2.11.1` - Algorand blockchain SDK
+- `inotify`, `watchdog` - File system monitoring
+
+## Development
+
+### Common Commands
+
+```bash
+# Start/stop
+docker-compose up -d
+docker-compose down
+
+# View logs
+docker-compose logs -f odoo19
+
+# Restart after code changes
+docker-compose restart odoo19
+
+# Access container
+docker-compose exec odoo19 bash
+
+# Access database
+docker-compose exec db psql -U odoo -d postgres
+```
+
+### Adding Custom Addons
+
+Place addons in `addons/` directory, restart, and update apps list in Odoo
+
+## Docker Commands Reference
+
+```bash
+# Build custom image
+docker build -t odoo:19-custom .
+
+# Rebuild and restart
+docker-compose up -d --build
+
+# Clean slate (⚠️ deletes all data)
+docker-compose down -v
+rm -rf postgresql/* test_installation/*
+```
+
+## Manual Setup
+
+If you prefer manual setup instead of using `install.sh`:
 
 1. **Clone the repository**:
    ```bash
@@ -112,106 +265,6 @@ If you prefer manual setup:
    - Go to **Apps** → Update Apps List
    - Search "Algorand Pera Payment" → Install
    - See [Installation Guide](addons/algorand_pera_payment/readme/INSTALL.md)
-
-## Configuration
-
-### Environment Variables
-
-⚠️ **Important**: Configuration files are not included in the repository for security. You must create them from the examples.
-
-**Required files**:
-- `.env` - Environment variables (from `.env.example`)
-- `docker-compose.yml` - Docker config (from `docker-compose.yml.example`)
-- `etc/odoo.conf` - Odoo config (from `etc/odoo.conf.example`)
-
-**Default settings**:
-- **Database**: PostgreSQL 17 on port 5432
-- **Odoo**: http://localhost:8069
-- **User**: `odoo`
-
-All passwords are configured via `.env` file for security.
-
-### Python Dependencies
-
-Automatically installed on startup from `etc/requirements.txt`:
-- `py-algorand-sdk==2.11.1` - Algorand blockchain SDK
-- `inotify`, `watchdog` - File system monitoring
-
-## Algorand Pera Payment Module
-
-Accept cryptocurrency payments (ALGO and USDC) in your Odoo store via Pera Wallet.
-
-### Key Features
-
-- ✅ **ALGO Payments** - Native Algorand cryptocurrency
-- ✅ **USDC Payments** - Stablecoin via Algorand Standard Assets
-- ✅ **Fast Transactions** - ~3.7 second confirmation
-- ✅ **Low Fees** - Less than $0.01 per transaction
-- ✅ **TestNet & MainNet** - Full testing environment support
-
-### Documentation
-
-Comprehensive guides available in [`addons/algorand_pera_payment/readme/`](addons/algorand_pera_payment/readme/):
-
-- **[Description](addons/algorand_pera_payment/readme/DESCRIPTION.md)** - Features and benefits
-- **[Installation](addons/algorand_pera_payment/readme/INSTALL.md)** - Prerequisites and setup steps
-- **[Configuration](addons/algorand_pera_payment/readme/CONFIGURE.md)** - Network setup, USDC opt-in, merchant address
-- **[Usage](addons/algorand_pera_payment/readme/USAGE.md)** - Payment flow, customer experience, error handling
-- **[History](addons/algorand_pera_payment/readme/HISTORY.md)** - Changelog and version history
-- **[Contributors](addons/algorand_pera_payment/readme/CONTRIBUTORS.md)** - Project contributors
-
-Full API documentation: [README.rst](addons/algorand_pera_payment/README.rst)
-
-### Quick Configuration
-
-1. **Configure merchant address**:
-   - Go to Website → Configuration → Payment Providers
-   - Select "Algorand Pera Wallet"
-   - Set your Algorand wallet address
-
-2. **Choose network**: TestNet (testing) or MainNet (production)
-
-3. **For USD payments**: Opt-in to USDC (see [Configuration Guide](addons/algorand_pera_payment/readme/CONFIGURE.md))
-
-## Development
-
-### Common Commands
-
-```bash
-# Start/stop
-docker-compose up -d
-docker-compose down
-
-# View logs
-docker-compose logs -f odoo19
-
-# Restart after code changes
-docker-compose restart odoo19
-
-# Access container
-docker-compose exec odoo19 bash
-
-# Access database
-docker-compose exec db psql -U odoo -d postgres
-```
-
-### Adding Custom Addons
-
-Place addons in `addons/` directory, restart, and update apps list in Odoo
-
-## Docker Commands Reference
-
-```bash
-# Build custom image
-docker build -t odoo:19-custom .
-
-# Rebuild and restart
-docker-compose up -d --build
-
-# Clean slate (⚠️ deletes all data)
-docker-compose down -v
-rm -rf postgresql/* test_installation/*
-```
 
 ## Troubleshooting
 

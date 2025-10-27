@@ -1,3 +1,55 @@
+Configuration Guide
+===================
+
+This guide will walk you through configuring the Algorand Pera Wallet payment provider in Odoo.
+
+Step-by-Step Configuration
+---------------------------
+
+### Step 1: Login to Odoo
+
+Log in to your Odoo instance with administrator credentials.
+
+![Login Screen](screenshots/1-login.png)
+
+### Step 2: Navigate to Payment Providers
+
+Go to **Website > Configuration > Payment Providers**
+
+![Navigate to Payment Providers](screenshots/2-gotopayment.png)
+
+### Step 3: Select Algorand Pera Wallet
+
+Find and click on **Algorand Pera Wallet** from the list of available payment providers.
+
+![Select Algorand Provider](screenshots/3-selectAlgo.png)
+
+### Step 4: Configure Merchant Address
+
+In the provider configuration page:
+
+1. Set the **State** to either:
+   - **Test Mode** (for testing on TestNet)
+   - **Enabled** (for production on MainNet)
+
+2. Enter your **Merchant Algorand Address** (required, 58 characters)
+
+3. Configure the **Algorand Node URL**:
+   - TestNet: `https://testnet-api.algonode.cloud`
+   - MainNet: `https://mainnet-api.algonode.cloud`
+
+4. Click **"Check USDC Opt-in Status"** to verify your USDC configuration
+
+5. Click **"Verify Node"** to test the node connection
+
+![Configure Merchant Address](screenshots/4-setAddress.png)
+
+### Step 5: Publish the Provider
+
+Once configured, the provider will show as **Published** and ready to accept payments.
+
+![Published Provider](screenshots/5-publishProvider.png)
+
 Merchant Address Configuration (Required)
 ==========================================
 
@@ -8,13 +60,6 @@ The module will validate that:
 1. **Address is configured**: You cannot enable the provider without setting a merchant address
 2. **Address format is valid**: Algorand addresses must be exactly 58 characters long
 3. **Address exists on blockchain**: The address should be a valid Algorand account
-
-To configure your merchant address:
-
-1. Go to **Website > Configuration > Payment Providers**
-2. Select **Algorand Pera Wallet**
-3. In the **Merchant Algorand Address** field, enter your 58-character Algorand wallet address
-4. Click **"Check USDC Opt-in Status"** to verify your USDC configuration (see below)
 
 Network Configuration
 ====================

@@ -217,6 +217,21 @@ patch(PaymentForm.prototype, {
                 network: values.network
             });
 
+            // Build transaction note with host, amount, ASA, and order-payment relation
+            const txNote = {
+                host: window.location.host,
+                amount: values.amount,
+                currency: values.currency_display_name || values.currency_name,
+                tx_id: (processingValues && processingValues.tx_id) || (values && values.tx_id) || null,
+            };
+            if (values.is_asa && values.asset_id) {
+                txNote.asa_id = values.asset_id;
+                txNote.asa_name = values.currency_display_name || values.currency_name;
+            }
+            const noteString = JSON.stringify(txNote);
+            const noteBytes = new TextEncoder().encode(noteString);
+            console.info('[Algorand][frontend] transaction note:', noteString);
+
             let transaction;
             try {
                 if (values.is_asa && values.asset_id) {
@@ -227,6 +242,7 @@ patch(PaymentForm.prototype, {
                         receiver: receiverAddress,
                         amount: asaAmount,
                         assetIndex: Number(values.asset_id),
+                        note: noteBytes,
                         suggestedParams,
                     };
                     console.debug('[Algorand][frontend] asaObject (sender/receiver keys)', asaObject);
@@ -237,6 +253,7 @@ patch(PaymentForm.prototype, {
                         sender: senderAddress,
                         receiver: receiverAddress,
                         amount: algosdk.algosToMicroalgos(parseFloat(values.amount)),
+                        note: noteBytes,
                         suggestedParams,
                     };
                     console.debug('[Algorand][frontend] payObject', payObject);

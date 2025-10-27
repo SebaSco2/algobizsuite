@@ -1,5 +1,57 @@
-Customer Experience
-==================
+Customer Payment Flow - Visual Walkthrough
+==========================================
+
+This guide shows the complete customer journey from browsing products to completing an Algorand payment.
+
+### Step 1: Browse Products
+
+Navigate to the shop and browse available products.
+
+![Browse Shop](screenshots/6-gotoShop.png)
+
+### Step 2: Add to Cart
+
+Select a product and click "Add to cart" to add it to your shopping cart.
+
+![Add to Cart](screenshots/7-AddToCart.png)
+
+### Step 3: Review Order
+
+Review your order summary and click "Checkout" to proceed to payment.
+
+![Checkout](screenshots/8-checkout.png)
+
+### Step 4: Connect Pera Wallet
+
+On the payment page:
+1. Select "Algorand (Pera Wallet)" as your payment method
+2. Click "Connect Wallet"
+3. Scan the QR code with your Pera Wallet mobile app, or click "Connect With Pera Web"
+
+![Connect Pera Wallet](screenshots/9-connectPera.png)
+
+### Step 5: Complete Payment
+
+Once your wallet is connected:
+1. Review the payment details (recipient address, amount)
+2. For USDC payments: Complete opt-in if needed (button shown automatically)
+3. Click "Pay now"
+4. Approve the transaction in your Pera Wallet
+
+![Complete Payment](screenshots/10-doThePayment.png)
+
+### Step 6: Payment Confirmed
+
+After successful payment:
+- Payment confirmation is displayed with transaction hash
+- Order is automatically confirmed
+- You can view the transaction on Algorand Explorer
+- Order confirmation email is sent
+
+![Payment Confirmed](screenshots/11-checkAlgoExplorer.png)
+
+Customer Experience Summary
+===========================
 
 When a customer selects Algorand Pera Wallet as their payment method:
 
