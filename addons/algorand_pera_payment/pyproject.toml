@@ -32,4 +32,3 @@ external_dependencies_override = {python = ["algosdk"]}
 [tool.odoo.addons]
 
 [tool.odoo.addons.algorand_pera_payment]
-

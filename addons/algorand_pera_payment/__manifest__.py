@@ -8,9 +8,7 @@
     "development_status": "Beta",
     "summary": "Add Pera Wallet (Algorand) payment option to website checkout and Point of Sale",
     "depends": ["website_sale", "payment", "point_of_sale"],
-    "external_dependencies": {
-        "python": ["algosdk", "qrcode"]
-    },
+    "external_dependencies": {"python": ["algosdk", "qrcode"]},
     "images": ["static/description/icon.png"],
     "data": [
         "security/ir.model.access.csv",
@@ -35,4 +33,3 @@
     "auto_install": False,
     "post_init_hook": "post_init_hook",
 }
-

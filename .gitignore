@@ -22,6 +22,8 @@ _build/
 !.github
 !.mailmap
 !.env.example
+# Code quality configuration files
+!.flake8
 # compiled python files
 *.py[co]
 __pycache__/

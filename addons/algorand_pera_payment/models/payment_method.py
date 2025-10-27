@@ -1,11 +1,11 @@
 # Copyright 2025 Odoo Community Association (OCA)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import models, fields
+from odoo import fields, models
 
 
 class PaymentMethod(models.Model):
-    _inherit = 'payment.method'
+    _inherit = "payment.method"
 
     image = fields.Image(
         string="Image",
@@ -16,7 +16,7 @@ class PaymentMethod(models.Model):
 
     image_payment_form = fields.Image(
         string="The resized image displayed on the payment form.",
-        related='image',
+        related="image",
         store=True,
         max_width=45,
         max_height=30,

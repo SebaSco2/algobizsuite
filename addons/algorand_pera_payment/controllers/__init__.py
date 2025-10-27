@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
+# Copyright 2025 Odoo Community Association (OCA)
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from . import main
 from . import pos_controller
-
