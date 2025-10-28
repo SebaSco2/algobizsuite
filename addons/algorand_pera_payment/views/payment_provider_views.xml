@@ -7,34 +7,18 @@
         <field name="inherit_id" ref="payment.payment_provider_form"/>
         <field name="arch" type="xml">
                 <group name="provider_credentials" position="inside">
-                    <group invisible="code != 'algorand_pera'" name="algorand_credentials" string="Algorand Configuration">
-                        <div class="alert alert-info" role="alert">
-                            <strong>Network:</strong> 
-                            <span class="badge badge-primary" invisible="state != 'enabled'">MAINNET</span>
-                            <span class="badge badge-secondary" invisible="state == 'enabled'">TESTNET</span>
-                            <br/>
-                            <small>Network is determined by Provider state: <strong>Enabled</strong> → Mainnet, <strong>Test Mode</strong> → Testnet</small>
-                        </div>
-                        
+                    <group invisible="code != 'algorand_pera'" name="algorand_credentials" string="ALGORAND (PERA)">
+                        <field name="algorand_merchant_address" 
+                               placeholder="Enter your 58-character Algorand wallet address"
+                               required="code == 'algorand_pera' and state != 'disabled'"/>
+                        <label for="algorand_node_url"/>
                         <div class="o_row">
-                            <div class="o_col-6">
-                                <label for="algorand_merchant_address"/>
-                                <field name="algorand_merchant_address" 
-                                       placeholder="Enter your 58-character Algorand wallet address"
-                                       required="code == 'algorand_pera' and state != 'disabled'"/>
-                            </div>
-                            <div class="o_col-6">
-                                <label for="algorand_node_url"/>
-                                <div class="o_row">
-                                    <field name="algorand_node_url" class="o_col-8"/>
-                                    <button string="Verify Node"
-                                            type="object"
-                                            name="action_algorand_verify_node"
-                                            class="btn btn-secondary o_col-4"/>
-                                </div>
-                            </div>
+                            <field name="algorand_node_url" class="o_col-8"/>
+                            <button string="Verify Node"
+                                    type="object"
+                                    name="action_algorand_verify_node"
+                                    class="btn btn-secondary o_col-4"/>
                         </div>
-                        
                         <div class="o_row">
                             <button string="Check USDC Opt-in Status"
                                     type="object"
@@ -42,7 +26,6 @@
                                     class="btn btn-primary"
                                     help="Verify if your merchant address is opted-in to USDC to accept USD payments"/>
                         </div>
-                        
                         <div class="alert alert-warning" role="alert">
                             <strong>Important:</strong>
                             <ul class="mb-0">
