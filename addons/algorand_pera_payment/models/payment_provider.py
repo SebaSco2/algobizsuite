@@ -20,10 +20,34 @@ class PaymentProvider(models.Model):
         ondelete={"algorand_pera": "set default"},
     )
 
+
+    def _algorand_effective_network(self) -> str:
+        """Return the effective network derived from provider state.
+
+        - enabled -> mainnet
+        - test -> testnet
+        - others -> testnet
+        """
+        self.ensure_one()
+        return "mainnet" if self.state == "enabled" else "testnet"
+
     algorand_merchant_address = fields.Char(
         string="Merchant Algorand Address",
         help="The Algorand address that will receive payments",
     )
+
+    @api.onchange("state")
+    def _onchange_state_set_default_node(self):
+        """Auto-fill node URL based on provider state -> network mapping."""
+        for provider in self:
+            if provider.code != "algorand_pera":
+                continue
+            network = provider._algorand_effective_network()
+            provider.algorand_node_url = (
+                "https://mainnet-api.algonode.cloud"
+                if network == "mainnet"
+                else "https://testnet-api.algonode.cloud"
+            )
 
     algorand_network = fields.Selection(
         [("testnet", "Testnet"), ("mainnet", "Mainnet")],
@@ -101,7 +125,7 @@ class PaymentProvider(models.Model):
         # Decide if we should use USDC ASA (when user currency is USD)
         use_usdc = bool(currency and currency.name == "USD")
         usdc_asset_id = (
-            const.USDC_ASA_IDS_BY_NETWORK.get(self.algorand_network)
+            const.USDC_ASA_IDS_BY_NETWORK.get(self._algorand_effective_network())
             if use_usdc
             else None
         )
@@ -143,7 +167,7 @@ class PaymentProvider(models.Model):
             "currency_display_name": currency_display_name,
             "partner_id": partner_id,
             "is_validation": is_validation,
-            "network": self.algorand_network,
+            "network": self._algorand_effective_network(),
             "node_url": self.algorand_node_url,
             "payment_methods_mapping": const.PAYMENT_METHODS_MAPPING,
             "is_asa": use_usdc,
@@ -206,7 +230,9 @@ class PaymentProvider(models.Model):
             from algosdk.v2client import algod
 
             # Get USDC asset ID for current network
-            usdc_asset_id = const.USDC_ASA_IDS_BY_NETWORK.get(self.algorand_network)
+            usdc_asset_id = const.USDC_ASA_IDS_BY_NETWORK.get(
+                self._algorand_effective_network()
+            )
             if not usdc_asset_id:
                 _logger.warning(
                     "No USDC asset ID configured for network %s", self.algorand_network
@@ -226,7 +252,7 @@ class PaymentProvider(models.Model):
                         "Merchant address %s is opted-in to USDC (asset %s) on %s",
                         self.algorand_merchant_address[:10] + "...",
                         usdc_asset_id,
-                        self.algorand_network,
+                        self._algorand_effective_network(),
                     )
                     return True
 
@@ -234,7 +260,7 @@ class PaymentProvider(models.Model):
                 "Merchant address %s is NOT opted-in to USDC (asset %s) on %s",
                 self.algorand_merchant_address[:10] + "...",
                 usdc_asset_id,
-                self.algorand_network,
+                self._algorand_effective_network(),
             )
             return False
 
@@ -304,20 +330,22 @@ class PaymentProvider(models.Model):
             }
 
         is_opted_in = self._check_algorand_usdc_optin()
-        usdc_asset_id = const.USDC_ASA_IDS_BY_NETWORK.get(self.algorand_network, "N/A")
+        usdc_asset_id = const.USDC_ASA_IDS_BY_NETWORK.get(
+            self._algorand_effective_network(), "N/A"
+        )
 
         if is_opted_in:
             message = _(
                 "✓ Merchant address is opted-in to USDC (Asset ID: %s) on %s. "
                 "You can accept USD payments."
-            ) % (usdc_asset_id, self.algorand_network.upper())
+            ) % (usdc_asset_id, self._algorand_effective_network().upper())
             msg_type = "success"
         else:
             message = _(
                 "✗ Merchant address is NOT opted-in to USDC (Asset ID: %s) on %s. "
                 "Please opt-in to accept USD payments. "
                 "You can still accept ALGO payments."
-            ) % (usdc_asset_id, self.algorand_network.upper())
+            ) % (usdc_asset_id, self._algorand_effective_network().upper())
             msg_type = "warning"
 
         return {

@@ -124,7 +124,7 @@ class PosPaymentMethod(models.Model):
             raise ValueError("Merchant address not configured in Algorand provider")
 
         # Get network and node URL
-        network = provider.algorand_network or "testnet"
+        network = provider._algorand_effective_network() or "testnet"
         node_url = provider.algorand_node_url
 
         # Determine if this is USDC or ALGO payment
