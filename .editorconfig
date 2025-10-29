@@ -1,0 +1,34 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+root = true
+
+# Unix shell scripts - use LF
+[*.{sh,bash}]
+end_of_line = lf
+charset = utf-8
+insert_final_newline = true
+
+# Windows batch files - use CRLF
+[*.bat]
+end_of_line = crlf
+charset = utf-8
+insert_final_newline = true
+
+# Config files - use LF
+[*.{conf,yml,yaml}]
+end_of_line = lf
+charset = utf-8
+insert_final_newline = true
+
+# Python files - use LF
+[*.py]
+end_of_line = lf
+charset = utf-8
+insert_final_newline = true
+
+# XML files - use LF
+[*.xml]
+end_of_line = lf
+charset = utf-8
+insert_final_newline = true
+

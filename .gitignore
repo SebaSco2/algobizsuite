@@ -19,6 +19,8 @@ _build/
 # dotfiles
 .*
 !.gitignore
+!.gitattributes
+!.editorconfig
 !.github
 !.mailmap
 !.env.example
