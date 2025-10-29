@@ -73,6 +73,17 @@ if not exist etc\odoo.conf (
     echo ✓ etc/odoo.conf exists
 )
 
+REM Fix line endings for shell scripts (Windows CRLF to Unix LF)
+echo 🔧 Fixing line endings for shell scripts...
+if exist entrypoint.sh (
+    powershell -Command "(Get-Content entrypoint.sh -Raw) -replace \"`r`n\", \"`n\" | Set-Content entrypoint.sh -NoNewline -Encoding ASCII"
+)
+if exist install.sh (
+    powershell -Command "(Get-Content install.sh -Raw) -replace \"`r`n\", \"`n\" | Set-Content install.sh -NoNewline -Encoding ASCII"
+)
+echo ✓ Fixed line endings
+echo.
+
 echo.
 echo 🐳 Starting Docker containers...
 echo.
