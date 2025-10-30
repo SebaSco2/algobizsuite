@@ -10,7 +10,12 @@ set -e
 
 # install python packages
 # Install project requirements while respecting Debian's externally-managed environment (PEP 668)
-pip3 install -r /etc/odoo/requirements.txt --break-system-packages
+# Make pip non-fatal and only install if requirements file has non-comment content
+set +e
+if [ -f /etc/odoo/requirements.txt ] && grep -Eq '^[^#[:space:]]' /etc/odoo/requirements.txt; then
+    pip3 install --no-cache-dir -r /etc/odoo/requirements.txt --break-system-packages || true
+fi
+set -e
 
 DB_ARGS=()
 function check_config() {
@@ -42,7 +47,13 @@ case "$1" in
         exec odoo "$@" "${DB_ARGS[@]}"
         ;;
     *)
-        exec "$@"
+        # If no explicit command provided, run odoo with computed DB args
+        if [ -z "$1" ]; then
+            wait-for-psql.py ${DB_ARGS[@]} --timeout=30
+            exec odoo "${DB_ARGS[@]}"
+        else
+            exec "$@"
+        fi
 esac
 
 exit 1
